@@ -33,20 +33,28 @@ DO NOT PUSH USERNAMES AND PASSWORDS TO GITHUB. ALWAYS PUT THEM IN A FILE LISTED 
     
     #window.mainloop() 
 
-
 window = Tk()
+window.geometry("500x500")
+my_img = None
+
+def upload_picture():
+    #find file 
+    global my_img
+    filename = filedialog.askopenfilename(initialdir=".", title="Select File to Upload", 
+    filetypes=(("jpeg", "*.jpeg"),("png", "*.png"),("bmp", "*.bmp"),("gif", "*.gif"),("jpg", "*.jpg")))
+    my_file = Label(window, text=filename)
+    my_file.pack()
+    my_img = ImageTk.PhotoImage(PIL.Image.open(filename))
+    my_label = Label(window, image=my_img)
+    my_label.photo = my_img
+    my_label.pack(side = "bottom", fill = "both", expand = "yes")
+
+button_upload = Button(window, text="Select image to upload", command=upload_picture)
+button_upload.pack()
 
 
-
-#find file
-window.filename = filedialog.askopenfilename(initialdir="/", title="Select File to Upload", 
-filetypes=(("jpeg", "*.jpeg"),("png", "*.png"),("bmp", "*.bmp"),("gif", "*.gif"),("jpg", "*.jpg")))
-my_file = Label(window, text=window.filename)
 
 #open file
-my_img = ImageTk.PhotoImage(PIL.Image.open(window.filename))
-my_label = Label(image=my_img)
-my_label.pack()
 
 #exit button
 button_quit = Button(window, text="Quit", command=window.quit)
